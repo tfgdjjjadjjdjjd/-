@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-2">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static "stark/bootstrap/css/bootstrap.min.css" %} ">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+        <h1 style="color: #2aabd2;font-family: 幼圆">用户列表</h1>
+        <a href="/add/"class="btn btn-success">添加</a>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                    <th>操作</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    {% for i in u_list %}
+                        <tr>
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.age }}</td>
+                            <td>{{ i.student_type }}</td>
+                            <td><a href="/ueduit/{{ i.id }}">编辑</a></td>
+                            <td><a href="/del/{{ i.id }}">删除</a></td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+            <div class="pager pull-right" >
+                <ul class="pagination">
+                    {{ page_html|safe }}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

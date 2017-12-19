@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pager a{
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 5px;
+            border: 1px solid violet;
+        }
+        .pager a.active{
+            background-color:#b2dba1;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center">主机列表</h1>
+    <ul>
+        {% for item in host_list %}
+            <li>{{ item }}
+                <a href="/edit/54/?{{ list_condition }}">编辑</a></li>
+        {% endfor %}
+    </ul>
+    <div class="pager">
+        {{ page_html|safe }}
+    </div>
+</body>
+</html>

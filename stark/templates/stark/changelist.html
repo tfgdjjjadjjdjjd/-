@@ -10,28 +10,58 @@
 </head>
 <body>
     <div class="container">
-    <h1 class="text-center" style="color: gainsboro">列表页面</h1>
-        {% if show_add_btn %}
-            <a href="{{add_url}}" class="btn btn-success">添加</a>
-        {% endif %}
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                {% for item in head_list %}
-                    <th>{{ item }}</th>
+    <h1 style="color: #2aabd2" class="text-center">列表页面</h1>
+
+    {% if cl.show_add_btn %}
+        <a class="btn btn-success" href="{{ cl.add_url }}">添加</a>
+    {% endif %}
+      {% if cl.show_search_form %}
+        <div class="form-group"style="margin-top: 10px" >
+            <form method="get">
+                        <input name="{{ cl.config.search_key }}" value="{{ cl.search_form_val }}" class="form-control" placeholder="请输入搜索条件" type="text"  style="display:inline-block;width: 200px;"/>
+                        <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
+        </div>
+    {% endif %}
+
+
+    <form method="post">
+        {% csrf_token %}
+        {% if cl.show_actions %}
+            <div class="form-group">
+            <select name="list_action" class="form-control" style="display:inline-block;width: 200px;">
+                {% for item in cl.modify_actions %}
+                    <option value="{{ item.name }}">{{ item.text }}</option>
                 {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for obj in data_list %}
+
+            </select>
+            <button class="btn btn-primary">执行</button>
+        </div>
+        {% endif %}
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    {% for col in obj %}
-                        <td>{{ col }}</td>
+                    {% for item in cl.head_list %}
+                        <th>{{ item }}</th>
                     {% endfor %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for obj in cl.body_list %}
+                    <tr>
+                        {% for col in obj %}
+                            <td>{{ col }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    <div>
+        <ul class="pagination pull-right">
+            {{ cl.page_obj.page_html|safe }}
+        </ul>
+    </div>
     </div>
 </body>
 </html>
